@@ -7,7 +7,8 @@
     [neo.config :refer [env]]
     [clojure.tools.cli :refer [parse-opts]]
     [clojure.tools.logging :as log]
-    [mount.core :as mount])
+    [mount.core :as mount]
+    [neo.discord.core :refer [bot]])
   (:gen-class))
 
 ;; log uncaught exceptions in threads

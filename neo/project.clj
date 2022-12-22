@@ -3,14 +3,15 @@
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
 
-  :dependencies [[ch.qos.logback/logback-classic "1.4.4"]
+  :dependencies [[com.github.discljord/discljord "1.3.1"]
+                 [ch.qos.logback/logback-classic "1.4.4"]
                  [clojure.java-time "1.1.0"]
                  [conman "0.9.5"]
                  [cprop "0.1.19"]
                  [expound "0.9.0"]
                  [funcool/struct "1.4.0"]
                  [json-html "0.4.7"]
-                 [luminus-jetty "0.2.3"]
+                 [luminus-http-kit "0.2.0"]
                  [luminus-migrations "0.7.5"]
                  [luminus-transit "0.1.5"]
                  [luminus/ring-ttl-session "0.3.3"]
@@ -31,10 +32,11 @@
                  [ring/ring-core "1.9.6"]
                  [ring/ring-defaults "0.3.4"]
                  [selmer "1.12.55"]
-                 [tea-time "1.0.1"]]
+                 [tea-time "1.0.1"]
+                 [clj-http "3.9.1"]]
 
   :min-lein-version "2.0.0"
-  
+
   :source-paths ["src/clj"]
   :test-paths ["test/clj"]
   :resource-paths ["resources"]

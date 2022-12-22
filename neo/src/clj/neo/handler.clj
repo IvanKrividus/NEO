@@ -7,6 +7,8 @@
     [ring.middleware.content-type :refer [wrap-content-type]]
     [ring.middleware.webjars :refer [wrap-webjars]]
     [neo.env :refer [defaults]]
+    [neo.config :refer [env]]
+    [neo.routes.auth :refer [auth-routes]]
     [mount.core :as mount]))
 
 (mount/defstate init-app
@@ -22,7 +24,8 @@
   :start
   (ring/ring-handler
     (ring/router
-      [(home-routes)])
+      [(home-routes)
+       (auth-routes env)])
     (ring/routes
       (ring/create-resource-handler
         {:path "/"})

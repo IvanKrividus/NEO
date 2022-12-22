@@ -8,14 +8,13 @@
     [muuntaja.middleware :refer [wrap-format wrap-params]]
     [neo.config :refer [env]]
     [ring-ttl-session.core :refer [ttl-memory-store]]
-    [ring.middleware.defaults :refer [site-defaults wrap-defaults]])
-  )
+    [ring.middleware.defaults :refer [site-defaults wrap-defaults]]))
 
 (defn wrap-internal-error [handler]
   (let [error-result (fn [^Throwable t]
                        (log/error t (.getMessage t))
-                       (error-page {:status 500
-                                    :title "Something very bad has happened!"
+                       (error-page {:status  500
+                                    :title   "Something very bad has happened!"
                                     :message "We've dispatched a team of highly trained gnomes to take care of the problem."}))]
     (fn wrap-internal-error-fn
       ([req respond _]
@@ -32,15 +31,14 @@
     {:error-response
      (error-page
        {:status 403
-        :title "Invalid anti-forgery token"})}))
-
+        :title  "Invalid anti-forgery token"})}))
 
 (defn wrap-formats [handler]
   (let [wrapped (-> handler wrap-params (wrap-format formats/instance))]
     (fn
       ([request]
-         ;; disable wrap-formats for websockets
-         ;; since they're not compatible with this middleware
+       ;; disable wrap-formats for websockets
+       ;; since they're not compatible with this middleware
        ((if (:websocket? request) handler wrapped) request))
       ([request respond raise]
        ((if (:websocket? request) handler wrapped) request respond raise)))))
@@ -50,7 +48,8 @@
       (wrap-defaults
         (-> site-defaults
             (assoc-in [:security :anti-forgery] false)
-            (assoc-in  [:session :store] (ttl-memory-store (* 60 30)))))
+            (assoc-in [:session :store] (ttl-memory-store (* 60 30)))
+            (assoc-in [:session :cookie-attrs :same-site] :lax)))
       wrap-internal-error))
 
 
